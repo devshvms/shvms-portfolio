@@ -48,8 +48,8 @@ const Contacts = () => {
                 <h1 className="contactPageTitle">Contact Me</h1>
                 <span className="contactDesc">Please fill out the form to discuss any work opportunity</span>
                 <form className='contactForm' ref={form} onSubmit={sendEmail}>
-                    <input type="text" className="name" placeholder='Your name' name= 'from_name'/>
-                    <input type="email" className="email" placeholder='Your email' name='from_email' />
+                    <input type="text" className="name" placeholder='Your name' name= 'from_name' required/>
+                    <input type="email" className="email" placeholder='Your email' name='from_email' required />
                     <textarea name="message" className="msg" rows="5" placeholder='Your message'></textarea>
                     <button type="submit" className="submitBtn">Submit</button>
                     <div className='links'>
