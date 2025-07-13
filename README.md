@@ -1,70 +1,153 @@
-# Getting Started with Create React App
+# Shivam Singh - Portfolio Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, responsive portfolio website built with React, TypeScript, and Material-UI. This project showcases my skills, projects, and provides a professional way for potential employers and clients to get in touch.
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+- **Modern Design**: Clean, professional design with smooth animations
+- **Responsive**: Fully responsive design that works on all devices
+- **TypeScript**: Type-safe code for better development experience
+- **Material-UI**: Consistent, accessible UI components
+- **Animations**: Smooth scroll animations using Framer Motion
+- **Contact Form**: Functional contact form with validation
+- **Portfolio Showcase**: Beautiful project cards with technology tags
+- **SEO Optimized**: Meta tags and structured data for better search visibility
 
-### `npm start`
+## 🛠️ Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Frontend**: React 18, TypeScript
+- **UI Framework**: Material-UI (MUI)
+- **Animations**: Framer Motion
+- **Styling**: Material-UI System (sx prop)
+- **Icons**: Material-UI Icons
+- **Scroll**: React Scroll
+- **Intersection Observer**: React Intersection Observer
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📦 Installation
 
-### `npm test`
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/devshvms/shvms-portfolio.git
+   cd shvms-portfolio
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-### `npm run build`
+3. **Start the development server**
+   ```bash
+   npm start
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000) to view the application.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🏗️ Project Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+src/
+├── components/          # React components
+│   ├── navbar/         # Navigation component
+│   ├── intro/          # Hero section
+│   ├── skills/         # Skills showcase
+│   ├── works/          # Portfolio projects
+│   ├── contacts/       # Contact form
+│   └── footer/         # Footer component
+├── assets/             # Images and static files
+├── theme/              # Material-UI theme configuration
+├── types/              # TypeScript type definitions
+└── App.tsx            # Main application component
+```
 
-### `npm run eject`
+## 🎨 Customization
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Colors and Theme
+The color scheme can be customized in `src/theme/theme.ts`:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```typescript
+export const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#EFC430', // Your brand color
+    },
+    // ... other theme options
+  },
+});
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Content Updates
+- **Personal Information**: Update contact details in `src/components/contacts/contacts.tsx`
+- **Projects**: Modify project data in `src/components/works/works.tsx`
+- **Skills**: Update skills in `src/components/skills/skills.tsx`
+- **Social Links**: Update social media links in footer and contact components
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Images
+Replace images in the `src/assets/` directory:
+- Portfolio project images
+- Skill icons
+- Profile pictures
 
-## Learn More
+## 📱 Responsive Design
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The website is fully responsive and optimized for:
+- **Desktop**: 1200px and above
+- **Tablet**: 768px - 1199px
+- **Mobile**: 320px - 767px
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🚀 Deployment
 
-### Code Splitting
+### Build for Production
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Deploy to Firebase
+```bash
+npm install -g firebase-tools
+firebase login
+firebase init
+firebase deploy
+```
 
-### Analyzing the Bundle Size
+### Deploy to Netlify
+1. Connect your GitHub repository to Netlify
+2. Set build command: `npm run build`
+3. Set publish directory: `build`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🔧 Available Scripts
 
-### Making a Progressive Web App
+- `npm start` - Start development server
+- `npm run build` - Build for production
+- `npm test` - Run tests
+- `npm run eject` - Eject from Create React App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 📄 License
 
-### Advanced Configuration
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 🤝 Contributing
 
-### Deployment
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 📞 Contact
 
-### `npm run build` fails to minify
+- **Email**: dev.shvms@gmail.com
+- **LinkedIn**: [Shivam Singh](https://linkedin.com/in/shivamsingh361)
+- **GitHub**: [Your GitHub](https://github.com/devshvms)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🙏 Acknowledgments
+
+- [Material-UI](https://mui.com/) for the component library
+- [Framer Motion](https://www.framer.com/motion/) for animations
+- [React Scroll](https://github.com/fisshy/react-scroll) for smooth scrolling
+- [Create React App](https://create-react-app.dev/) for the project setup
+
+---
+
+Made with ❤️ by Shivam Singh
