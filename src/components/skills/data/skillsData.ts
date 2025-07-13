@@ -1,5 +1,4 @@
-import { experienceData } from '../../about/data';
-import { worksData } from '../../works/data';
+import { dataService } from '../../../resources';
 
 export interface SkillFrequency {
   name: string;
@@ -19,16 +18,20 @@ const colorPalette = [
 export const generateSkillsData = (): SkillFrequency[] => {
   const skillCount: { [key: string]: number } = {};
   
+  // Get data from dataService
+  const experiences = dataService.getExperiences();
+  const works = dataService.getWorks();
+  
   // Process experience data
-  experienceData.forEach(experience => {
-    experience.technologies.forEach(tech => {
+  experiences?.forEach((experience: any) => {
+    experience.technologies.forEach((tech: string) => {
       const normalizedTech = tech.toLowerCase().trim();
       skillCount[normalizedTech] = (skillCount[normalizedTech] || 0) + 1;
     });
   });
   
-  // Process portfolio data
-  worksData.forEach((work: any) => {
+  // Process works data
+  works?.forEach((work: any) => {
     work.technologies.forEach((tech: string) => {
       const normalizedTech = tech.toLowerCase().trim();
       skillCount[normalizedTech] = (skillCount[normalizedTech] || 0) + 1;
@@ -52,8 +55,11 @@ export const generateSkillsData = (): SkillFrequency[] => {
 export const getExperienceSkills = (): SkillFrequency[] => {
   const skillCount: { [key: string]: number } = {};
   
-  experienceData.forEach(experience => {
-    experience.technologies.forEach(tech => {
+  // Get data from dataService
+  const experiences = dataService.getExperiences();
+  
+  experiences?.forEach((experience: any) => {
+    experience.technologies.forEach((tech: string) => {
       const normalizedTech = tech.toLowerCase().trim();
       skillCount[normalizedTech] = (skillCount[normalizedTech] || 0) + 1;
     });
@@ -73,7 +79,10 @@ export const getExperienceSkills = (): SkillFrequency[] => {
 export const getWorksSkills = (): SkillFrequency[] => {
   const skillCount: { [key: string]: number } = {};
   
-  worksData.forEach((work: any) => {
+  // Get data from dataService
+  const works = dataService.getWorks();
+  
+  works?.forEach((work: any) => {
     work.technologies.forEach((tech: string) => {
       const normalizedTech = tech.toLowerCase().trim();
       skillCount[normalizedTech] = (skillCount[normalizedTech] || 0) + 1;

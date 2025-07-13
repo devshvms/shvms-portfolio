@@ -3,5 +3,4 @@ export { default as HeroSection } from './components/HeroSection';
 export { default as WhatsNewSlider } from './components/WhatsNewSlider';
 export { default as VisitorCounter } from './components/VisitorCounter';
 export * from './types';
-export * from './data/whatsNewData';
 export * from './hooks/useVisitorTracking';
