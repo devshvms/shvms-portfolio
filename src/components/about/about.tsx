@@ -10,12 +10,13 @@ import { useInView } from 'react-intersection-observer';
 import { AboutProps } from './types';
 import { useExperienceExpansion } from './hooks/useExperienceExpansion';
 import ExperienceTimeline from './ExperienceTimeline';
-import { useExperiencesData } from '../../resources';
+import { usePortfolioData } from '../../resources';
 
 const About: React.FC<AboutProps> = () => {
   const theme = useTheme();
   const { expandedId, handleExpandClick } = useExperienceExpansion();
-  const experiences = useExperiencesData();
+  const { data: portfolioData, loading, error } = usePortfolioData();
+  const experiences = portfolioData?.experiences || [];
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -39,6 +40,21 @@ const About: React.FC<AboutProps> = () => {
       transition: { duration: 0.6 },
     },
   };
+
+  if (loading) {
+    return (
+      <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <h2 style={{ color: 'gray' }}>Loading experiences...</h2>
+      </Box>
+    );
+  }
+  if (error || !Array.isArray(experiences) || experiences.length === 0) {
+    return (
+      <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <h2 style={{ color: 'red' }}>Error: No experiences data found. Please check your Firestore portfolio/main document.</h2>
+      </Box>
+    );
+  }
 
   return (
     <Box

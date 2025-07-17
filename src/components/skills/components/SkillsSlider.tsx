@@ -27,12 +27,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Skill } from '../../../types';
-import { 
-  useSkillsFrequencyData, 
-  useExperienceSkillsData, 
-  useWorksSkillsData,
-  useSkillsData
-} from '../../../resources';
+import { usePortfolioData } from '../../../resources';
+import { generateSkillsData, getExperienceSkills, getWorksSkills, SkillFrequency } from '../data/skillsData';
 import beStack from '../../../assets/beStack.png';
 import feStack from '../../../assets/frontendStack.png';
 import softSkill from '../../../assets/softSkill.png';
@@ -154,11 +150,14 @@ const SkillsSlider: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [viewType, setViewType] = useState<'combined' | 'experience' | 'works'>('combined');
   const [chartType, setChartType] = useState<'bar' | 'pie'>('bar');
+  const { data: portfolioData, loading, error } = usePortfolioData();
+  const experiences = portfolioData?.experiences || [];
+  const works = portfolioData?.works || [];
 
-  // Get data from centralized resources
-  const skillsFrequencyData = useSkillsFrequencyData();
-  const experienceSkillsData = useExperienceSkillsData();
-  const worksSkillsData = useWorksSkillsData();
+  // Compute skills data from Firestore
+  const skillsFrequencyData: SkillFrequency[] = generateSkillsData(experiences, works);
+  const experienceSkillsData: SkillFrequency[] = getExperienceSkills(experiences);
+  const worksSkillsData: SkillFrequency[] = getWorksSkills(works);
 
   // Combine graph and skills data
   const allSlides = [
@@ -201,6 +200,13 @@ const SkillsSlider: React.FC = () => {
   };
 
   const currentSlideData = allSlides[currentSlide];
+
+  if (loading) {
+    return <Box sx={{ py: 4, textAlign: 'center' }}><Typography>Loading skills data...</Typography></Box>;
+  }
+  if (error) {
+    return <Box sx={{ py: 4, textAlign: 'center' }}><Typography color="error">Error loading skills data.</Typography></Box>;
+  }
 
   return (
     <Box sx={{ mb: 4 }}>

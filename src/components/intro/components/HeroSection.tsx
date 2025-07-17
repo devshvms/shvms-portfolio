@@ -10,7 +10,16 @@ import EmailIcon from '@mui/icons-material/Email';
 import { HeroSectionProps } from '../types';
 import VisitorCounter from './VisitorCounter';
 
-const HeroSection: React.FC<HeroSectionProps> = ({ visitorCount }) => {
+interface DeploymentInfo {
+  deploymentId: string;
+  deploymentDate: string;
+}
+
+interface ExtendedHeroSectionProps extends HeroSectionProps {
+  deployment?: DeploymentInfo | null;
+}
+
+const HeroSection: React.FC<ExtendedHeroSectionProps> = ({ visitorCount, deployment }) => {
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -76,6 +85,16 @@ const HeroSection: React.FC<HeroSectionProps> = ({ visitorCount }) => {
       <motion.div variants={itemVariants}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
           <VisitorCounter count={visitorCount} />
+          {deployment && deployment.deploymentDate && !isNaN(Date.parse(deployment.deploymentDate)) && (
+            <Typography
+              variant="body2"
+              sx={{ color: 'text.secondary', mt: 1 }}
+            >
+              Last Deployed On: {new Date(deployment.deploymentDate).toLocaleString()}
+            </Typography>
+          )}
+        </Box>
+        <Box sx={{ mt: 2 }}>
           <Button
             variant="outlined"
             size="large"

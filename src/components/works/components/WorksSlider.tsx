@@ -16,11 +16,12 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LaunchIcon from '@mui/icons-material/Launch';
-import { useWorksData } from '../../../resources';
+import { usePortfolioData } from '../../../resources';
 
 const WorksSlider: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const worksData = useWorksData();
+  const { data: portfolioData, loading, error } = usePortfolioData();
+  const worksData = portfolioData?.works || [];
 
   const nextSlide = () => {
     if (!Array.isArray(worksData) || worksData.length === 0) return;
@@ -35,11 +36,20 @@ const WorksSlider: React.FC = () => {
   const currentWork = worksData?.[currentSlide];
 
   // Guard clause for missing data
-  if (!Array.isArray(worksData) || worksData.length === 0 || !currentWork) {
+  if (loading) {
     return (
       <Box sx={{ mb: 4, textAlign: 'center', py: 4 }}>
         <Typography variant="h6" color="text.secondary">
-          No works data available
+          Loading works data...
+        </Typography>
+      </Box>
+    );
+  }
+  if (error || !Array.isArray(worksData) || worksData.length === 0 || !currentWork) {
+    return (
+      <Box sx={{ mb: 4, textAlign: 'center', py: 4 }}>
+        <Typography variant="h6" color="text.secondary">
+          No works data available. Please check your Firestore portfolio/main document.
         </Typography>
       </Box>
     );
@@ -131,7 +141,7 @@ const WorksSlider: React.FC = () => {
                       sx={{ justifyContent: 'center' }} 
                       flexWrap="wrap"
                     >
-                      {currentWork.technologies.map((tech) => (
+                      {currentWork.technologies.map((tech: string) => (
                         <Chip
                           key={tech}
                           label={tech}

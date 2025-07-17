@@ -16,14 +16,17 @@ import {
 import { Link } from 'react-scroll';
 import MenuIcon from '@mui/icons-material/Menu';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
-import { useNavigationData, usePersonalData } from '../../resources';
+import { usePortfolioData } from '../../resources';
+
+type NavItem = { id: string; label: string; target: string };
 
 const Navbar: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const navItems = useNavigationData();
-  const personal = usePersonalData();
+  const { data: portfolioData, loading, error } = usePortfolioData();
+  const navItems: NavItem[] = portfolioData?.navigation?.items || [];
+  const personal = portfolioData?.personal || {};
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -44,7 +47,7 @@ const Navbar: React.FC = () => {
         Portfolio
       </Typography>
       <List>
-        {(navItems || []).map((item) => (
+        {(navItems || []).map((item: NavItem) => (
           <ListItem key={item.id} onClick={() => handleNavClick(item.target)}>
             <ListItemText 
               primary={item.label}
@@ -78,6 +81,25 @@ const Navbar: React.FC = () => {
     </Box>
   );
 
+  if (loading) {
+    return (
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6">Loading...</Typography>
+        </Toolbar>
+      </AppBar>
+    );
+  }
+  if (error) {
+    return (
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" color="error">Error loading navigation data.</Typography>
+        </Toolbar>
+      </AppBar>
+    );
+  }
+
   return (
     <>
       <AppBar 
@@ -102,7 +124,7 @@ const Navbar: React.FC = () => {
 
           {!isMobile && (
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              {(navItems || []).map((item) => (
+              {navItems.map((item: NavItem) => (
                 <Link
                   key={item.id}
                   to={item.target}

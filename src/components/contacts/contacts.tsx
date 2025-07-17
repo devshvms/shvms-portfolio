@@ -16,7 +16,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Contact } from '../../types';
 import SocialSlider from './components/SocialSlider';
-import { useSocialData } from '../../resources';
+import { usePortfolioData } from '../../resources';
 
 const Contacts: React.FC = () => {
   const [formData, setFormData] = useState<Contact>({
@@ -30,7 +30,8 @@ const Contacts: React.FC = () => {
     severity: 'success' as 'success' | 'error',
   });
   const [currentSlide, setCurrentSlide] = useState(0);
-  const socialProfiles = useSocialData();
+  const { data: portfolioData, loading, error } = usePortfolioData();
+  const socialProfiles = portfolioData?.social?.profiles || [];
 
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -140,6 +141,21 @@ const Contacts: React.FC = () => {
   const handleCloseSnackbar = () => {
     setSnackbar(prev => ({ ...prev, open: false }));
   };
+
+  if (loading) {
+    return (
+      <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <h2 style={{ color: 'gray' }}>Loading contact data...</h2>
+      </Box>
+    );
+  }
+  if (error) {
+    return (
+      <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <h2 style={{ color: 'red' }}>Error loading contact data. Please check your Firestore portfolio/main document.</h2>
+      </Box>
+    );
+  }
 
   if (!Array.isArray(socialProfiles) || socialProfiles.length === 0) {
     return (

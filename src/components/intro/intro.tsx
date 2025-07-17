@@ -10,12 +10,13 @@ import { IntroProps } from './types';
 import { useVisitorTracking } from './hooks/useVisitorTracking';
 import HeroSection from './components/HeroSection';
 import WhatsNewSlider from './components/WhatsNewSlider';
-import { useWhatsNewData } from '../../resources';
+import { usePortfolioData } from '../../resources';
 
 const Intro: React.FC<IntroProps> = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const visitorCount = useVisitorTracking();
-  const whatsNewData = useWhatsNewData();
+  const { visitorCount, deployment } = useVisitorTracking();
+  const { data: portfolioData, loading, error } = usePortfolioData();
+  const whatsNewData = portfolioData?.intro?.whatsNew || [];
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -45,10 +46,17 @@ const Intro: React.FC<IntroProps> = () => {
   };
 
   // Guard for missing or malformed data (after all hooks)
-  if (!Array.isArray(whatsNewData) || whatsNewData.length === 0) {
+  if (loading) {
     return (
       <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <h2 style={{ color: 'red' }}>Error: No "What&apos;s New" data found. Please check your portfolioData.json.</h2>
+        <h2 style={{ color: 'gray' }}>Loading portfolio data...</h2>
+      </Box>
+    );
+  }
+  if (error || !Array.isArray(whatsNewData) || whatsNewData.length === 0) {
+    return (
+      <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <h2 style={{ color: 'red' }}>Error: No "What&apos;s New" data found. Please check your Firestore portfolio/main document.</h2>
       </Box>
     );
   }
@@ -85,7 +93,7 @@ const Intro: React.FC<IntroProps> = () => {
           animate={inView ? 'visible' : 'hidden'}
         >
           <Grid container spacing={4} alignItems="center">
-            <HeroSection visitorCount={visitorCount} />
+            <HeroSection visitorCount={visitorCount} deployment={deployment} />
             <WhatsNewSlider
               currentSlide={currentSlide}
               items={whatsNewData}

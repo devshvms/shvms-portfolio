@@ -1,4 +1,5 @@
-import portfolioDataRaw from './portfolioData.json';
+import { db } from '../firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 export interface PortfolioData {
   personal: {
@@ -140,44 +141,27 @@ export interface PortfolioData {
   };
 }
 
-let portfolioData: PortfolioData | null = null;
-let portfolioDataError: string | null = null;
-
-function validatePortfolioData(data: any): data is PortfolioData {
-  // Basic validation for required top-level fields
-  if (!data) return false;
-  const requiredFields = [
-    'personal', 'navigation', 'social', 'intro', 'skills', 'experiences', 'works', 'contact', 'footer', 'theme', 'animations'
-  ];
-  for (const field of requiredFields) {
-    if (!(field in data)) {
-      portfolioDataError = `portfolioData.json is missing required field: ${field}`;
-      return false;
+// Async function to fetch portfolio data from Firestore
+export async function getPortfolioDataFromFirestore(): Promise<PortfolioData | null> {
+  try {
+    const docRef = doc(db, 'portfolio', 'main');
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data() as PortfolioData;
     }
+    return null;
+  } catch (err) {
+    console.error('Error fetching portfolio data from Firestore:', err);
+    return null;
   }
-  return true;
 }
 
-try {
-  if (!portfolioDataRaw || Object.keys(portfolioDataRaw).length === 0) {
-    portfolioDataError = 'portfolioData.json is empty or missing.';
-  } else if (validatePortfolioData(portfolioDataRaw)) {
-    portfolioData = portfolioDataRaw as PortfolioData;
-  } else {
-    if (!portfolioDataError) portfolioDataError = 'portfolioData.json is malformed.';
-  }
-} catch (err: any) {
-  portfolioDataError = 'Error loading portfolioData.json: ' + (err?.message || String(err));
-}
-
-export function getPortfolioDataError() {
-  return portfolioDataError;
-}
+// DataService is now deprecated; use getPortfolioDataFromFirestore instead.
 
 class DataService {
   private data: PortfolioData | null;
   constructor() {
-    this.data = portfolioData;
+    this.data = null; // This class will now always return null as data is fetched externally
   }
   getAllData(): PortfolioData | null {
     return this.data;
@@ -335,5 +319,4 @@ class DataService {
   }
 }
 
-export const dataService = new DataService();
-export const portfolioDataExport = portfolioData as PortfolioData; 
+export const dataService = new DataService(); 
