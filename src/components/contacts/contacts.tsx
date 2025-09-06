@@ -10,7 +10,6 @@ import {
   CardContent,
   Alert,
   Snackbar,
-  Paper,
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';

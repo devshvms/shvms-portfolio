@@ -9,6 +9,8 @@ import Skills from './components/skills/skills';
 import Works from './components/works/works';
 import Contacts from './components/contacts/contacts';
 import Footer from './components/footer/footer';
+import ChatModule from './components/chat';
+
 
 const App: React.FC = () => {
   return (
@@ -28,6 +30,7 @@ const App: React.FC = () => {
         <Works />
         <Contacts />
         <Footer />
+        <ChatModule />
       </Box>
     </ThemeProvider>
   );
