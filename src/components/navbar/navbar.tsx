@@ -15,7 +15,6 @@ import {
 } from '@mui/material';
 import { Link } from 'react-scroll';
 import MenuIcon from '@mui/icons-material/Menu';
-import ContactMailIcon from '@mui/icons-material/ContactMail';
 import { usePortfolioData } from '../../resources';
 
 type NavItem = { id: string; label: string; target: string };
@@ -35,10 +34,6 @@ const Navbar: React.FC = () => {
   const handleNavClick = (target: string) => {
     setMobileOpen(false);
     document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleContactClick = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const drawer = (
@@ -63,20 +58,6 @@ const Navbar: React.FC = () => {
             />
           </ListItem>
         ))}
-        <ListItem onClick={handleContactClick}>
-          <ListItemText 
-            primary="Contact"
-            sx={{
-              textAlign: 'center',
-              '& .MuiListItemText-primary': {
-                color: 'text.primary',
-                '&:hover': {
-                  color: 'primary.main',
-                },
-              },
-            }}
-          />
-        </ListItem>
       </List>
     </Box>
   );

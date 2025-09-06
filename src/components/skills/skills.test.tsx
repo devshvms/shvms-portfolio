@@ -127,19 +127,4 @@ describe('Skills', () => {
     expect(images.length).toBeGreaterThan(0);
   });
 
-  it('handles chart type changes', () => {
-    renderWithTheme(<Skills />);
-    
-    // Find chart type toggle buttons
-    const toggleButtons = screen.getAllByRole('button');
-    const pieButton = toggleButtons.find(button => 
-      button.textContent?.includes('Pie') || button.getAttribute('aria-label')?.includes('pie')
-    );
-    
-    if (pieButton) {
-      fireEvent.click(pieButton);
-      // Should change to pie chart
-      expect(pieButton).toBeInTheDocument();
-    }
-  });
 }); 

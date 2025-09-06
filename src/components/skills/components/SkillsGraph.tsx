@@ -16,8 +16,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  PieChart,
-  Pie,
   Cell,
 } from 'recharts';
 import { motion } from 'framer-motion';
@@ -53,52 +51,6 @@ const SkillsGraph: React.FC<SkillsGraphProps> = ({ data, title, type }) => {
     }
     return null;
   };
-
-  if (type === 'pie') {
-    return (
-      <Card
-        sx={{
-          height: '100%',
-          backgroundColor: 'background.paper',
-          borderRadius: 3,
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-        }}
-      >
-        <CardContent sx={{ p: 3 }}>
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 600,
-              mb: 3,
-              color: 'text.primary',
-              textAlign: 'center',
-            }}
-          >
-            {title}
-          </Typography>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={data}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="frequency"
-              >
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip content={<CustomTooltip />} />
-            </PieChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-    );
-  }
 
   return (
     <Card
@@ -216,7 +168,6 @@ const SkillsGraphContainer: React.FC = () => {
           }}
         >
           <ToggleButton value="bar">Bar Chart</ToggleButton>
-          <ToggleButton value="pie">Pie Chart</ToggleButton>
         </ToggleButtonGroup>
       </Box>
 

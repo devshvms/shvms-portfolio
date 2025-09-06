@@ -48,6 +48,13 @@ const ChatBar = styled(Paper)<{ expanded: boolean }>(({ theme, expanded }) => ({
   overflow: 'hidden',
   display: 'flex',
   flexDirection: 'column',
+
+  [theme.breakpoints.down('sm')]: {
+    width: expanded ? '90vw' : '56px', // Use 90vw (90% of viewport width)
+    // Or, for a fixed width that fits, you could use:
+    // width: expanded ? '320px' : '56px',
+    height: expanded ? '80vh' : '56px', // Adjust height to be 80% of viewport height for better fit
+  },
 }));
 
 const ChatHeader = styled(Box)(({ theme }) => ({

@@ -4,8 +4,6 @@ import {
   Card,
   CardContent,
   Typography,
-  CardMedia,
-  Button,
   IconButton,
   ToggleButtonGroup,
   ToggleButton,
@@ -19,8 +17,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  PieChart,
-  Pie,
   Cell,
 } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -98,30 +94,6 @@ const SkillsGraph: React.FC<SkillsGraphProps> = ({ data, title, type }) => {
     }
     return null;
   };
-
-  if (type === 'pie') {
-    return (
-      <ResponsiveContainer width="100%" height={450}>
-        <PieChart>
-          <Pie
-            data={data}
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
-            outerRadius={150}
-            fill="#8884d8"
-            dataKey="frequency"
-          >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} />
-            ))}
-          </Pie>
-          <Tooltip content={<CustomTooltip />} />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  }
 
   return (
     <ResponsiveContainer width="100%" height={450}>
@@ -252,7 +224,6 @@ const SkillsSlider: React.FC = () => {
           }}
         >
           <ToggleButton value="bar">Bar Chart</ToggleButton>
-          <ToggleButton value="pie">Pie Chart</ToggleButton>
         </ToggleButtonGroup>
       </Box>
 
