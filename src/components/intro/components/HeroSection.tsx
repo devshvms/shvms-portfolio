@@ -19,7 +19,7 @@ interface ExtendedHeroSectionProps extends HeroSectionProps {
   deployment?: DeploymentInfo | null;
 }
 
-const HeroSection: React.FC<ExtendedHeroSectionProps> = ({ visitorCount, deployment }) => {
+const HeroSection: React.FC<ExtendedHeroSectionProps> = ({ visitorCount, deployment, email }) => {
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -95,27 +95,52 @@ const HeroSection: React.FC<ExtendedHeroSectionProps> = ({ visitorCount, deploym
           )}
         </Box>
         <Box sx={{ mt: 2 }}>
-          <Button
-            variant="outlined"
-            size="large"
-            startIcon={<EmailIcon />}
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            sx={{
-              borderColor: 'primary.main',
-              color: 'primary.main',
-              px: 4,
-              py: 1.5,
-              fontSize: '1.1rem',
-              '&:hover': {
-                borderColor: 'primary.dark',
-                backgroundColor: 'primary.main',
-                color: 'primary.contrastText',
-              },
-              transition: 'all 0.3s ease',
-            }}
-          >
-            Contact
-          </Button>
+          {email ? (
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<EmailIcon />}
+              component="a"
+              href={`mailto:${email}`}
+              sx={{
+                borderColor: 'primary.main',
+                color: 'primary.main',
+                px: 4,
+                py: 1.5,
+                fontSize: '1.1rem',
+                '&:hover': {
+                  borderColor: 'primary.dark',
+                  backgroundColor: 'primary.main',
+                  color: 'primary.contrastText',
+                },
+                transition: 'all 0.3s ease',
+              }}
+            >
+              Contact
+            </Button>
+          ) : (
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<EmailIcon />}
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              sx={{
+                borderColor: 'primary.main',
+                color: 'primary.main',
+                px: 4,
+                py: 1.5,
+                fontSize: '1.1rem',
+                '&:hover': {
+                  borderColor: 'primary.dark',
+                  backgroundColor: 'primary.main',
+                  color: 'primary.contrastText',
+                },
+                transition: 'all 0.3s ease',
+              }}
+            >
+              Contact
+            </Button>
+          )}
         </Box>
       </motion.div>
     </Grid>

@@ -13,6 +13,7 @@ export interface IntroProps {
 
 export interface HeroSectionProps {
   visitorCount: number;
+  email?: string;
 }
 
 export interface VisitorCounterProps {

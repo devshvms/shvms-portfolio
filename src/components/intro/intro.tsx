@@ -17,6 +17,7 @@ const Intro: React.FC<IntroProps> = () => {
   const { visitorCount, deployment } = useVisitorTracking();
   const { data: portfolioData, loading, error } = usePortfolioData();
   const whatsNewData = portfolioData?.intro?.whatsNew || [];
+  const email = portfolioData?.personal?.email;
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -93,7 +94,7 @@ const Intro: React.FC<IntroProps> = () => {
           animate={inView ? 'visible' : 'hidden'}
         >
           <Grid container spacing={4} alignItems="center">
-            <HeroSection visitorCount={visitorCount} deployment={deployment} />
+            <HeroSection visitorCount={visitorCount} deployment={deployment} email={email} />
             <WhatsNewSlider
               currentSlide={currentSlide}
               items={whatsNewData}
