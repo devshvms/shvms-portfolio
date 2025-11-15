@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const useExperienceExpansion = (defaultExpandedId: string = 'lowes-sse') => {
+export const useExperienceExpansion = (defaultExpandedId: string = '7-lowes-sse') => {
   const [expandedId, setExpandedId] = useState<string>(defaultExpandedId);
 
   const handleExpandClick = (id: string) => {

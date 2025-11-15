@@ -34,10 +34,22 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({
     },
   };
 
+  // --- ADDED SORTING LOGIC ---
+  // Create a sorted copy to avoid mutating the prop
+  const sortedExperiences = [...experiences].sort((a, b) => {
+    // Get the first part of the id ("sequence") and convert to a number
+    const seqA = parseInt(a.id.split('-')[0], 10);
+    const seqB = parseInt(b.id.split('-')[0], 10);
+
+    // Sort in descending order
+    return seqB - seqA;
+  });
+  // --- END OF SORTING LOGIC ---
+
   return (
     <Box sx={{ mt: 6 }}>
       <Timeline position="alternate">
-        {experiences.map((experience, index) => (
+        {sortedExperiences.map((experience, index) => (
           <motion.div key={experience.id} variants={itemVariants}>
             <TimelineItem>
               <TimelineOppositeContent
@@ -59,7 +71,7 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({
                 >
                   <WorkIcon />
                 </TimelineDot>
-                {index < experiences.length - 1 && (
+                {index < sortedExperiences.length - 1 && (
                   <TimelineConnector sx={{ backgroundColor: 'primary.main' }} />
                 )}
               </TimelineSeparator>
